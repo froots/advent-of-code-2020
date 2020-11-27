@@ -1,11 +1,9 @@
 const days = require('./src/days');
 
-const [_, __, day] = process.argv;
-
-console.log(_, __, day);
+const [, , day] = process.argv;
 
 if (day) {
   days[Number(day)]();
 } else {
-  days.forEach(day => day());
+  days.forEach((d) => d());
 }
