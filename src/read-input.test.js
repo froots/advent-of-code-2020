@@ -7,7 +7,7 @@ test('readInput throws error if no file exists', () => {
   const mycb = jest.fn();
   expect(() => readInput(1, mycb)).toThrow(Error);
   expect(mycb).not.toHaveBeenCalled();
-  expect(fs.readFile.mock.calls[0][0]).toBe('./data/day1.txt');
+  expect(fs.readFile.mock.calls[0][0]).toBe('./src/day1/input.txt');
 });
 
 test('readInput calls callback with file data if successful', () => {
@@ -17,6 +17,6 @@ test('readInput calls callback with file data if successful', () => {
   fs.readFile.mockImplementation((path, cb) => cb(null, buffer));
   const mycb = jest.fn();
   readInput(1, mycb);
-  expect(fs.readFile.mock.calls[0][0]).toBe('./data/day1.txt');
+  expect(fs.readFile.mock.calls[0][0]).toBe('./src/day1/input.txt');
   expect(mycb.mock.calls[0][0]).toBe('file contents');
 });
