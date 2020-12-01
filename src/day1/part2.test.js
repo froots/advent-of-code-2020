@@ -1,4 +1,4 @@
-const part2 = require('./part2');
+const part2 = require('./part2.js');
 
 test('Day 1.2 finds three numbers that add to 2020 and multiplies them', () => {
   const input = [1721, 979, 366, 299, 675, 1456];
