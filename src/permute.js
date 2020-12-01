@@ -15,9 +15,8 @@ function permute(items, size = 2) {
 
   const [head, ...rest] = items;
 
-  const restPerms = permute(rest, size - 1);
   return [
-    ...restPerms.map((perms) => [head, ...perms]),
+    ...permute(rest, size - 1).map((perms) => [head, ...perms]),
     ...permute(rest, size),
   ];
 }
