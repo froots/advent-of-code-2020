@@ -1,6 +1,6 @@
-function validate(rule, phrase) {
+function validateByCount(rule, phrase) {
   const count = (phrase.match(new RegExp(rule.char, 'g')) || []).length;
-  return count >= rule.min && count <= rule.max;
+  return count >= rule.n1 && count <= rule.n2;
 }
 
-module.exports = validate;
+module.exports = { validateByCount };

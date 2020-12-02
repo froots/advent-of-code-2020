@@ -2,8 +2,8 @@ function parseRule(rule) {
   const re = /(?<min>\d+)-(?<max>\d+) (?<char>\w)/;
   const { groups } = rule.match(re);
   return {
-    min: Number(groups.min),
-    max: Number(groups.max),
+    n1: Number(groups.min),
+    n2: Number(groups.max),
     char: groups.char,
   };
 }
