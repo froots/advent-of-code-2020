@@ -3,4 +3,9 @@ function validateByCount(rule, phrase) {
   return count >= rule.n1 && count <= rule.n2;
 }
 
-module.exports = { validateByCount };
+function validateByPosition(rule, phrase) {
+  const [c1, c2] = [phrase.charAt(rule.n1 - 1), phrase.charAt(rule.n2 - 1)];
+  return (c1 === rule.char) !== (c2 === rule.char); // effectively an XOR here
+}
+
+module.exports = { validateByCount, validateByPosition };
