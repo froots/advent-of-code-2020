@@ -15,5 +15,5 @@ test('Day 3.1 returns the correct number of trees from the example layout', () =
     '.#..#...#.#',
   ];
 
-  expect(part1(input, 3, 1)).toBe(7);
+  expect(part1(input)).toBe(7);
 });

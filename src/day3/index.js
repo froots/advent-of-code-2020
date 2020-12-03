@@ -5,7 +5,7 @@ const part1 = require('./part1');
 function run() {
   readInput('3', (data) => {
     const input = data.split('\n').filter((line) => line);
-    logTimed('3.1', () => part1(input, 3, 1));
+    logTimed('3.1', () => part1(input));
   });
 }
 
