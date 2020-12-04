@@ -29,10 +29,15 @@ function validateHcl(hcl) {
   return /^#[0-9a-f]{6}$/.test(hcl);
 }
 
+function validateEcl(ecl) {
+  return ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'].includes(ecl);
+}
+
 module.exports = {
   validateByr,
   validateIyr,
   validateEyr,
   validateHgt,
   validateHcl,
+  validateEcl,
 };

@@ -4,6 +4,7 @@ const {
   validateEyr,
   validateHgt,
   validateHcl,
+  validateEcl,
 } = require('./validations.js');
 
 test('valid byr values', () => {
@@ -50,4 +51,11 @@ test('validates hair colour', () => {
   const invalid = ['#123abz', '123abc'];
   valid.forEach((v) => expect(validateHcl(v)).toBeTruthy());
   invalid.forEach((v) => expect(validateHcl(v)).toBeFalsy());
+});
+
+test('validates eye colour', () => {
+  const valid = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'];
+  const invalid = ['aml', 'oll'];
+  valid.forEach((v) => expect(validateEcl(v)).toBeTruthy());
+  invalid.forEach((v) => expect(validateEcl(v)).toBeFalsy());
 });
