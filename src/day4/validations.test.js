@@ -3,6 +3,7 @@ const {
   validateIyr,
   validateEyr,
   validateHgt,
+  validateHcl,
 } = require('./validations.js');
 
 test('valid byr values', () => {
@@ -42,4 +43,11 @@ test('validate heights', () => {
   ];
   valid.forEach((v) => expect(validateHgt(v)).toBeTruthy());
   invalid.forEach((v) => expect(validateHgt(v)).toBeFalsy());
+});
+
+test('validates hair colour', () => {
+  const valid = ['#123abc', '#babf00', '#000000', '#ffffff'];
+  const invalid = ['#123abz', '123abc'];
+  valid.forEach((v) => expect(validateHcl(v)).toBeTruthy());
+  invalid.forEach((v) => expect(validateHcl(v)).toBeFalsy());
 });

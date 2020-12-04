@@ -25,4 +25,14 @@ function validateHgt(hgt) {
   return validateRange(matches.groups.value, 59, 76);
 }
 
-module.exports = { validateByr, validateIyr, validateEyr, validateHgt };
+function validateHcl(hcl) {
+  return /^#[0-9a-f]{6}$/.test(hcl);
+}
+
+module.exports = {
+  validateByr,
+  validateIyr,
+  validateEyr,
+  validateHgt,
+  validateHcl,
+};
