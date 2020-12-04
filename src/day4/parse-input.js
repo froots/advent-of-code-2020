@@ -1,6 +1,6 @@
 function parsePassportInput(passportInput) {
   return Object.fromEntries(
-    passportInput.split(/\s+/).map((pair) => pair.split(':')),
+    passportInput.split(/\s+/).map((pair) => pair.split(':'))
   );
 }
 
