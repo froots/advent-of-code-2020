@@ -6,9 +6,10 @@
         "jest/globals": true
     },
     "extends": [
-        "prettier",
         "airbnb-base",
-        "plugin:jest/recommended"
+        "plugin:jest/recommended",
+        "prettier",
+        "prettier/react"
     ],
     "plugins": [
         "prettier",
