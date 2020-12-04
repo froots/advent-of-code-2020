@@ -33,11 +33,16 @@ function validateEcl(ecl) {
   return ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'].includes(ecl);
 }
 
+function validatePid(pid) {
+  return /^[0-9]{9}$/.test(pid);
+}
+
 module.exports = {
-  validateByr,
-  validateIyr,
-  validateEyr,
-  validateHgt,
-  validateHcl,
-  validateEcl,
+  byr: validateByr,
+  iyr: validateIyr,
+  eyr: validateEyr,
+  hgt: validateHgt,
+  hcl: validateHcl,
+  ecl: validateEcl,
+  pid: validatePid,
 };
