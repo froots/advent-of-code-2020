@@ -24,10 +24,7 @@ iyr:2011 ecl:brn hgt:59in`;
       byr: 1937,
       iyr: 2017,
       cid: '147',
-      hgt: {
-        value: 183,
-        units: 'cm',
-      },
+      hgt: '183cm',
     },
     {
       iyr: 2013,
@@ -45,10 +42,7 @@ iyr:2011 ecl:brn hgt:59in`;
       ecl: 'brn',
       pid: '760753108',
       byr: 1931,
-      hgt: {
-        value: 179,
-        units: 'cm',
-      },
+      hgt: '179cm',
     },
     {
       hcl: '#cfa07d',
@@ -56,10 +50,7 @@ iyr:2011 ecl:brn hgt:59in`;
       pid: '166559648',
       iyr: 2011,
       ecl: 'brn',
-      hgt: {
-        value: 59,
-        units: 'in',
-      },
+      hgt: '59in',
     },
   ]);
 });

@@ -8,10 +8,6 @@ function parsePassportInput(passportInput) {
     iyr: passport.iyr && Number(passport.iyr),
     eyr: passport.eyr && Number(passport.eyr),
     byr: passport.byr && Number(passport.byr),
-    hgt: passport.hgt && {
-      value: Number(passport.hgt.match(/^\d+/)[0]),
-      units: passport.hgt.match(/[a-z]+$/)[0],
-    },
   };
 }
 
