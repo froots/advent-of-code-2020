@@ -1,10 +1,11 @@
 const decode = require('./decode');
+const convertToSeatId = require('./convert-to-seat-id');
 
 function part1(seatCodes) {
   return Math.max(
     ...seatCodes
       .map(decode)
-      .map(([row, col]) => row * 8 + col)
+      .map(convertToSeatId)
   );
 }
 
