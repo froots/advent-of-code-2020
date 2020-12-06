@@ -1,15 +1,8 @@
 function countSharedChars(group) {
   const [first, ...rest] = group;
-  const candidates = new Set(first.split(''));
-  rest.forEach((questions) => {
-    const qs = new Set(questions.split(''));
-    candidates.forEach((candidate) => {
-      if (!qs.has(candidate)) {
-        candidates.delete(candidate);
-      }
-    });
-  });
-  return candidates.size;
+  return rest.reduce((common, qs) => {
+    return new Set([...common].filter(q => new Set(qs.split('')).has(q)));
+  }, new Set(first.split(''))).size;
 }
 
 function part2(input) {
