@@ -19,11 +19,15 @@ class Tree {
     return node;
   }
 
-  *parentSearch(first) {
+  find(value) {
+    return this.nodes.get(value);
+  }
+
+  *traverseParents(first) {
     const visited = new Set();
     const visitList = [];
     visitList.push(first);
-    while(visitList.length > 0) {
+    while (visitList.length > 0) {
       const node = visitList.pop();
       if (node && !visited.has(node)) {
         yield node;
@@ -39,6 +43,7 @@ class Node {
     this.value = value;
     this.parents = new Map();
     this.children = new Map();
+    this.sumOfChildren = null;
   }
 
   addChild(node, weight) {
@@ -49,6 +54,18 @@ class Node {
   addParent(node, weight) {
     this.parents.set(node, weight);
     return this;
+  }
+
+  childSum() {
+    if (this.sumOfChildren !== null) {
+      return this.sumOfChildren;
+    }
+    const sum = [...this.children.entries()]
+      .reduce((running, [childNode, weight]) => {
+        return running + weight * childNode.childSum();
+      }, 1);
+    this.sumOfChildren = sum;
+    return sum;
   }
 }
 
