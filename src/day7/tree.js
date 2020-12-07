@@ -52,4 +52,14 @@ class Node {
   }
 }
 
+Tree.fromRules = function(rules) {
+  const tree = new Tree();
+  rules.forEach(({colour, contents}) => {
+    contents.forEach((child) => {
+      tree.addEdge(colour, child.colour, child.count);
+    })
+  });
+  return tree;
+}
+
 module.exports = Tree;
