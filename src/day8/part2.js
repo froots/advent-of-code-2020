@@ -1,11 +1,8 @@
 const { parse, execute } = require('./console');
 
 function part2(bootCode) {
-  let result;
-  let success;
-
   for (const variation of variations(bootCode)) {
-    [result, success] = execute(parse(variation));
+    const [result, success] = execute(parse(variation));
     if (success) {
       return result;
     }
