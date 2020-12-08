@@ -4,67 +4,52 @@ const Operation = {
   JMP: Symbol('JMP'),
 };
 
-class Console {
-  constructor(bootcode = []) {
-    this.load(bootcode);
-  }
+function execute(code) {
+  let pointer = 0;
+  let acc = 0;
+  
+  while (true) {
+    let instruction = code[pointer];
 
-  static parseCode(code) {
-    return code.map((line) => {
-      const [operation, value] = line.split(' ');
-      return {
-        operation: Operation[operation.toUpperCase()],
-        value: Number(value),
-        calls: [],
-      };
-    });
-  }
-
-  load(bootcode) {
-    this.program = Console.parseCode(bootcode);
-    this.pointer = 0;
-    this.acc = 0;
-    this.counter = 0;
-    this.success = true;
-  }
-
-  nextInstruction() {
-    const instruction = this.program[this.pointer];
-    if (!instruction) {
-      return false;
+    if (!instruction) { // assume we've reached the end, but not necessarily
+      return [acc, true];
     }
-    if (instruction.calls.length > 0) {
-      this.success = false; // infinite loop condition
-      return false;
-    }
-    return instruction;
-  }
 
-  execute(instruction) {
+    if (instruction.called) {
+      return [acc, false];
+    }
+
     switch (instruction.operation) {
       case Operation.NOP:
-        this.pointer += 1;
+        pointer += 1;
+        instruction.called = true;
         break;
       case Operation.ACC:
-        this.acc += instruction.value;
-        this.pointer += 1;
+        acc += instruction.operand;
+        pointer += 1;
+        instruction.called = true;
         break;
       case Operation.JMP:
-        this.pointer += instruction.value;
+        pointer += instruction.operand;
+        instruction.called = true;
         break;
       default:
-        throw new Error('Unrecognised operation type');
+        throw new Error('Unrecognized instruction');
     }
-    instruction.calls.push(this.counter++);
-  }
-
-  run() {
-    let instruction;
-    while (instruction = this.nextInstruction()) {
-      this.execute(instruction)
-    }
-    return [this.acc, this.success];
   }
 }
 
-module.exports = Console;
+function parse(code) {
+  return code.map(parseLine);
+}
+
+function parseLine(line) {
+  const [operation, value] = line.split(' ');
+  return {
+    operation: Operation[operation.toUpperCase()],
+    operand: Number(value),
+    called: false
+  };
+}
+
+module.exports = { execute, parse };

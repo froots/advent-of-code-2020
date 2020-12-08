@@ -1,8 +1,7 @@
-const Console = require('./console');
+const { execute, parse } = require('./console');
 
 function part1(bootCode) {
-  const con = new Console(bootCode);
-  return con.run()[0];
+  return execute(parse(bootCode))[0];
 }
 
 module.exports = part1;
