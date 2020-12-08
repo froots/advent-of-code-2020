@@ -25,11 +25,16 @@ class Console {
     this.pointer = 0;
     this.acc = 0;
     this.counter = 0;
+    this.success = true;
   }
 
   nextInstruction() {
     const instruction = this.program[this.pointer];
-    if (!instruction || instruction.calls.length >= 1) {
+    if (!instruction) {
+      return false;
+    }
+    if (instruction.calls.length > 0) {
+      this.success = false; // infinite loop condition
       return false;
     }
     return instruction;
@@ -58,7 +63,7 @@ class Console {
     while (instruction = this.nextInstruction()) {
       this.execute(instruction)
     }
-    return this.acc;
+    return [this.acc, this.success];
   }
 }
 
