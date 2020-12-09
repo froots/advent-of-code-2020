@@ -8,4 +8,5 @@ module.exports = [
   require('./day6'),
   require('./day7'),
   require('./day8'),
+  require('./day9'),
 ];
