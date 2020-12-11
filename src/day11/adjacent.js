@@ -7,4 +7,4 @@ function adjacent(grid, y, x) {
   ].filter((row) => row);
 }
 
-module.exports = adjacent;
+module.exports = { adjacent };

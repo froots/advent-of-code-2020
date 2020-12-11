@@ -1,19 +1,18 @@
 const countOccupied = require('./count-occupied');
-const adjacent = require('./adjacent');
 const Label = require('./label');
 
-function tick(seating) {
+function tick(seating, visibilityFn) {
   return seating.map((row, y) => {
     return row
       .split('')
       .map((seat, x) => {
         switch (seat) {
           case Label.EMPTY:
-            return countOccupied(adjacent(seating, y, x)) === 0
+            return countOccupied(visibilityFn(seating, y, x)) === 0
               ? Label.OCCUPIED
               : Label.EMPTY;
           case Label.OCCUPIED:
-            return countOccupied(adjacent(seating, y, x)) >= 4
+            return countOccupied(visibilityFn(seating, y, x)) >= 4
               ? Label.EMPTY
               : Label.OCCUPIED;
           default:

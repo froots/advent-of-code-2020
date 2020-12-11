@@ -1,4 +1,4 @@
-const adjacent = require('./adjacent');
+const { adjacent } = require('./adjacent');
 
 const seating = [
   '#.##.L#.##',
