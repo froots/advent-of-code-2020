@@ -8,7 +8,7 @@ function part1(input) {
   let prev;
   while (!compare(prev, current)) {
     prev = current;
-    current = tick(current, adjacent);
+    current = tick(current, adjacent, 4);
   }
   return countOccupied(current);
 }

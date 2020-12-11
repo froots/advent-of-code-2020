@@ -74,10 +74,10 @@ test('Tick creates new seating arrangements according to rules', () => {
     '#.LLLLLL.L',
     '#.#L#L#.##',
   ];
-  expect(tick(step1, adjacent)).toEqual(step2);
-  expect(tick(step2, adjacent)).toEqual(step3);
-  expect(tick(step3, adjacent)).toEqual(step4);
-  expect(tick(step4, adjacent)).toEqual(step5);
-  expect(tick(step5, adjacent)).toEqual(step6);
-  expect(tick(step6, adjacent)).toEqual(step6);
+  expect(tick(step1, adjacent, 4)).toEqual(step2);
+  expect(tick(step2, adjacent, 4)).toEqual(step3);
+  expect(tick(step3, adjacent, 4)).toEqual(step4);
+  expect(tick(step4, adjacent, 4)).toEqual(step5);
+  expect(tick(step5, adjacent, 4)).toEqual(step6);
+  expect(tick(step6, adjacent, 4)).toEqual(step6);
 });
