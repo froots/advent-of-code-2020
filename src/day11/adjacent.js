@@ -1,4 +1,5 @@
 const Label = require('./label');
+const { vAdd } = require('../vector');
 
 function adjacent(grid, y, x) {
   let x0 = x - 1 < 0 ? 0 : x - 1;
@@ -46,10 +47,6 @@ function firstSeat(direction, grid, y, x) {
   return current === Label.OCCUPIED || current === Label.EMPTY
     ? current
     : false;
-}
-
-function vAdd([v1y, v1x], [v2y, v2x]) {
-  return [v1y + v2y, v1x + v2x];
 }
 
 module.exports = { adjacent, visible };
