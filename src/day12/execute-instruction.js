@@ -61,4 +61,31 @@ function execute1(state, instruction) {
   }
 }
 
-module.exports = { execute1 };
+function execute2(state, instruction) {
+  const action = instruction.slice(0, 1);
+  const value = Number(instruction.slice(1));
+
+  switch (action) {
+    case Actions.NORTH:
+    case Actions.EAST:
+    case Actions.SOUTH:
+    case Actions.WEST:
+      return {
+        waypoint: vAdd(state.waypoint, vProduct(Directions[action], value)),
+        location: state.location,
+      };
+    case Actions.RIGHT:
+    case Actions.LEFT:
+      return {
+        waypoint: rotate(state.waypoint, action, value),
+        location: state.location,
+      };
+    case Actions.FORWARD:
+      return {
+        waypoint: state.waypoint,
+        location: vAdd(state.location, vProduct(state.waypoint, value)),
+      };
+  }
+}
+
+module.exports = { execute1, execute2 };
