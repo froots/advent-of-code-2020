@@ -34,7 +34,7 @@ function rotate([x, y], direction, degrees) {
   return result;
 }
 
-function executeInstruction(state, instruction) {
+function execute1(state, instruction) {
   const action = instruction.slice(0, 1);
   const value = Number(instruction.slice(1));
 
@@ -61,4 +61,4 @@ function executeInstruction(state, instruction) {
   }
 }
 
-module.exports = executeInstruction;
+module.exports = { execute1 };
