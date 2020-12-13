@@ -23,13 +23,14 @@ function part2(buses) {
   let N = buses
     .filter((busId) => busId !== 'x')
     .reduce((product, busId) => product * BigInt(busId), 1n);
-  const sumOfProducts = buses.reduce((sum, bus, idx) => {
-    if (bus === 'x') {
-      return sum;
-    }
-    return sum + modProduct(BigInt(bus), BigInt(idx), N);
-  }, 0n);
-  return sumOfProducts % N;
+  return (
+    buses.reduce((sum, bus, idx) => {
+      if (bus === 'x') {
+        return sum;
+      }
+      return sum + modProduct(BigInt(bus), BigInt(idx), N);
+    }, 0n) % N
+  );
 }
 
 module.exports = part2;
