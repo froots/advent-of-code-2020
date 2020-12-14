@@ -20,7 +20,7 @@ function modProduct(ni, offset, N) {
 }
 
 function part2(buses) {
-  let N = buses
+  const N = buses
     .filter((busId) => busId !== 'x')
     .reduce((product, busId) => product * BigInt(busId), 1n);
   return (
