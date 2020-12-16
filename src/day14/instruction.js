@@ -19,20 +19,25 @@ function parse(line) {
   }
 }
 
-function executeV1({ maskOn, maskOff, memory }, { operation, args }) {
+function executeV1(state, { operation, args }) {
   switch (operation) {
     case Operations.SET_MASK:
       return {
+        mask: args[0],
         maskOn: BigInt(`0b${args[0].replace(/X/g, '0')}`),
         maskOff: BigInt(`0b${args[0].replace(/X/g, '1')}`),
-        memory,
+        memory: state.memory,
       };
     case Operations.WRITE:
-      memory.set(args[0], (args[1] | maskOn) & maskOff);
-      return { maskOn, maskOff, memory };
+      state.memory.set(args[0], (args[1] | state.maskOn) & state.maskOff);
+      return { ...state };
     default:
       throw new Error('Unknown operation');
   }
 }
 
-module.exports = { parse, executeV1 };
+function executeV2() {
+  return;
+}
+
+module.exports = { parse, executeV1, executeV2 };
