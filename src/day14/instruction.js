@@ -1,9 +1,6 @@
-Operations = {
-  SET_MASK: 'mask',
-  WRITE: 'mem',
-};
+const Operations = require('./operations');
 
-function parseInstruction(line) {
+function parse(line) {
   const maskMatcher = /^mask = ([01X]{36})$/;
   const memMatcher = /^mem\[(\d+)\] = (\d+)$/;
 
@@ -22,7 +19,7 @@ function parseInstruction(line) {
   }
 }
 
-function runInstruction({ maskOn, maskOff, memory }, { operation, args }) {
+function executeV1({ maskOn, maskOff, memory }, { operation, args }) {
   switch (operation) {
     case Operations.SET_MASK:
       return {
@@ -38,17 +35,4 @@ function runInstruction({ maskOn, maskOff, memory }, { operation, args }) {
   }
 }
 
-function part1(lines) {
-  return [
-    ...lines
-      .map(parseInstruction)
-      .reduce(runInstruction, {
-        maskOn: 0n,
-        maskOff: 0n,
-        memory: new Map(),
-      })
-      .memory.values(),
-  ].reduce((sum, val) => sum + val, 0n);
-}
-
-module.exports = part1;
+module.exports = { parse, executeV1 };
