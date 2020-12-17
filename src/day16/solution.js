@@ -18,9 +18,7 @@ function part2(input) {
     values.every((n) => valid(n, rules))
   );
 
-  const positions = fieldPositions(rules, validNearby);
-
-  return [...positions.entries()]
+  return [...fieldPositions(rules, validNearby).entries()]
     .filter(([label]) => label.match(/^departure/))
     .map(([, pos]) => ticket[pos])
     .reduce((product, n) => product * n, 1);
