@@ -1,4 +1,4 @@
-function part1(input, target) {
+function solution(input, target) {
   const record = new Map();
   let prev = input[0];
   let index = 1;
@@ -22,4 +22,4 @@ function part1(input, target) {
   return prev;
 }
 
-module.exports = { part1 };
+module.exports = { solution };
