@@ -19,8 +19,6 @@ function part1(input, target) {
     index += 1;
   }
 
-  console.log(record);
-
   return prev;
 }
 
