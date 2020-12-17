@@ -17,7 +17,7 @@ describe('14.1', () => {
   });
 });
 
-xdescribe('14.2', () => {
+describe('14.2', () => {
   test('Sums remaining values after instructions executed', () => {
     const input = [
       'mask = 000000000000000000000000000000X1001X',
