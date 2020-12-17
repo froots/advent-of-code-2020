@@ -14,26 +14,26 @@ nearby tickets:
 55,2,20
 38,6,12`;
 
-  const actual = parse(input);
+  const [rules, ticket, nearby] = parse(input);
 
-  expect(actual.rules.get('class')).toEqual([
+  expect(rules.get('class')).toEqual([
     [1, 3],
     [5, 7],
   ]);
 
-  expect(actual.rules.get('row')).toEqual([
+  expect(rules.get('row')).toEqual([
     [6, 11],
     [33, 44],
   ]);
 
-  expect(actual.rules.get('seat')).toEqual([
+  expect(rules.get('seat')).toEqual([
     [13, 40],
     [45, 50],
   ]);
 
-  expect(actual.ticket).toEqual([7, 1, 14]);
+  expect(ticket).toEqual([7, 1, 14]);
 
-  expect(actual.nearby).toEqual([
+  expect(nearby).toEqual([
     [7, 3, 47],
     [40, 4, 50],
     [55, 2, 20],

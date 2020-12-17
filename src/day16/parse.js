@@ -15,11 +15,7 @@ function parse(input) {
     .slice(1)
     .map((tkt) => tkt.split(',').map(Number));
 
-  return {
-    rules,
-    ticket,
-    nearby,
-  };
+  return [rules, ticket, nearby];
 }
 
 module.exports = parse;
