@@ -32,22 +32,6 @@ function setMaskV1(state, mask) {
   };
 }
 
-function writeV1(state, address, value) {
-  state.memory.set(address, (value | state.maskOn) & state.maskOff);
-  return { ...state };
-}
-
-function executeV1(state, { operation, args }) {
-  switch (operation) {
-    case Operations.SET_MASK:
-      return setMaskV1(state, args[0], args[1]);
-    case Operations.WRITE:
-      return writeV1(state, args[0], args[1]);
-    default:
-      throw new Error('Unknown operation');
-  }
-}
-
 function setMaskV2(state, rawMask) {
   const floating = [
     ...rawMask.split('').reverse().join('').matchAll(/X/g),
@@ -61,6 +45,15 @@ function setMaskV2(state, rawMask) {
     floatingTotal: floating.reduce(sum, 0n),
     memory: state.memory,
   };
+}
+
+function setMask(version, state, rawMask) {
+  return version === 1 ? setMaskV1(state, rawMask) : setMaskV2(state, rawMask);
+}
+
+function writeV1(state, address, value) {
+  state.memory.set(address, (value | state.maskOn) & state.maskOff);
+  return { ...state };
 }
 
 function writeV2(state, address, value) {
@@ -79,15 +72,21 @@ function writeV2(state, address, value) {
   return { ...state };
 }
 
-function executeV2(state, { operation, args }) {
+function write(version, state, address, value) {
+  return version === 1
+    ? writeV1(state, address, value)
+    : writeV2(state, address, value);
+}
+
+function execute(version, state, { operation, args }) {
   switch (operation) {
     case Operations.SET_MASK:
-      return setMaskV2(state, args[0]);
+      return setMask(version, state, args[0]);
     case Operations.WRITE:
-      return writeV2(state, args[0], args[1]);
+      return write(version, state, args[0], args[1]);
     default:
       throw new Error('Unrecognised operation');
   }
 }
 
-module.exports = { parse, executeV1, executeV2 };
+module.exports = { parse, execute };
