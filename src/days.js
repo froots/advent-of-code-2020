@@ -16,4 +16,5 @@ module.exports = [
   require('./day14'),
   require('./day15'),
   require('./day16'),
+  require('./day17'),
 ];
