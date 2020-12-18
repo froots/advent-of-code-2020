@@ -7,6 +7,12 @@ describe('Bounds in 1 dimension', () => {
     expect(bounds.ranges[0]).toEqual([0, 3]);
   });
 
+  test('Create bounds with given start value', () => {
+    const bounds = new Bounds(1, [3], [-2]);
+    expect(bounds.ranges.length).toBe(1);
+    expect(bounds.ranges[0]).toEqual([-2, 1]);
+  });
+
   test('returns correct dimensions', () => {
     const bounds = new Bounds(1, [3]);
     expect(bounds.dimensions).toEqual([3]);
@@ -49,6 +55,14 @@ describe('Bounds in 3 dimensions', () => {
     expect(bounds.ranges[0]).toEqual([0, 3]);
     expect(bounds.ranges[1]).toEqual([0, 3]);
     expect(bounds.ranges[2]).toEqual([0, 1]);
+  });
+
+  test('Create bounds with specified start values', () => {
+    const bounds = new Bounds(3, [3, 3, 3], [4, 7, -4]);
+    expect(bounds.ranges.length).toBe(3);
+    expect(bounds.ranges[0]).toEqual([4, 7]);
+    expect(bounds.ranges[1]).toEqual([7, 10]);
+    expect(bounds.ranges[2]).toEqual([-4, -1]);
   });
 
   test('Returns correct dimensions', () => {

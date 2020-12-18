@@ -1,8 +1,11 @@
 class Bounds {
-  constructor(dimensions, sizes) {
+  constructor(dimensions, sizes, starts) {
     this.ranges = Array(dimensions)
       .fill([0, 1])
-      .map((range, i) => (sizes[i] ? [0, sizes[i]] : range));
+      .map((range, i) => {
+        const start = (starts && starts[i]) || 0;
+        return sizes[i] ? [start, start + sizes[i]] : range;
+      });
   }
 
   get dimensions() {
