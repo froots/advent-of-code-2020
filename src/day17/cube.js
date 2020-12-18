@@ -1,23 +1,24 @@
 const Bounds = require('./bounds.js');
 
 class Cube {
-  constructor(input) {
+  constructor(dimensions = 3, input) {
+    this.dimensions = dimensions;
     this.active = new Set();
     this.ticks = 0;
     this.bounds = null;
 
     if (input) {
-      this.init(input);
+      this.init(dimensions, input);
     }
   }
 
-  init(input) {
-    this.bounds = new Bounds(input[0].length, input.length, 1);
+  init(dimensions, input) {
+    this.bounds = new Bounds(dimensions, [input[0].length, input.length]);
 
     for (let [y, row] of input.entries()) {
       for (let [x, cell] of row.split('').entries()) {
         if (cell === '#') {
-          this.active.add(this.coordId(x, y, 0));
+          this.active.add(this.coordId([x, y]));
         }
       }
     }
@@ -27,19 +28,19 @@ class Cube {
     return this.active.size;
   }
 
-  activeNeighboursOf([x, y, z]) {
-    let activeNeighbours = 0;
-    for (let zi = z - 1; zi <= z + 1; zi += 1) {
-      for (let yi = y - 1; yi <= y + 1; yi += 1) {
-        for (let xi = x - 1; xi <= x + 1; xi += 1) {
-          if (zi === z && yi === y && xi === x) {
-            continue;
-          }
-          activeNeighbours += this.active.has(this.coordId(xi, yi, zi));
-        }
-      }
-    }
-    return activeNeighbours;
+  activeNeighboursOf(coords) {
+    let neighbourBounds = new Bounds(
+      this.dimensions,
+      Array(this.dimensions).fill(3),
+      coords.map((val) => val - 1)
+    );
+    let neighbours = neighbourBounds
+      .coords()
+      .filter((nCoords) => nCoords.some((val, i) => val !== coords[i]));
+
+    return neighbours.filter((neighbour) =>
+      this.active.has(this.coordId(neighbour))
+    ).length;
   }
 
   tick() {
@@ -47,8 +48,8 @@ class Cube {
 
     this.bounds.expand();
 
-    this.bounds.coords.forEach((coords) => {
-      const coordId = this.coordId(...coords);
+    this.bounds.coords().forEach((coords) => {
+      const coordId = this.coordId(coords);
       const activeNeighbours = this.activeNeighboursOf(coords);
       if (this.active.has(coordId)) {
         if (activeNeighbours === 2 || activeNeighbours === 3) {
@@ -65,8 +66,11 @@ class Cube {
     this.ticks += 1;
   }
 
-  coordId(x, y, z) {
-    return [x, y, z].join(',');
+  coordId(coords) {
+    return Array(this.dimensions)
+      .fill(0)
+      .map((n, i) => coords[i] || n)
+      .join(',');
   }
 }
 

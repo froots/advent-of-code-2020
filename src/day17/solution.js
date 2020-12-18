@@ -1,7 +1,7 @@
 const Cube = require('./cube');
 
 function part1(input) {
-  let cube = new Cube(input);
+  let cube = new Cube(3, input);
 
   while (cube.ticks < 6) {
     cube.tick();
@@ -10,4 +10,6 @@ function part1(input) {
   return cube.activeCount;
 }
 
-module.exports = { part1 };
+function part2(input) {}
+
+module.exports = { part1, part2 };
