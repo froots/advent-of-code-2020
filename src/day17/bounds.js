@@ -1,10 +1,8 @@
-function combine(value, arrs) {
-  return arrs.map((arr) => [value, ...arr]);
-}
-
 class Bounds {
-  constructor(sizes) {
-    this.ranges = sizes.map((size) => [0, size]);
+  constructor(dimensions, sizes) {
+    this.ranges = Array(dimensions)
+      .fill([0, 1])
+      .map((range, i) => (sizes[i] ? [0, sizes[i]] : range));
   }
 
   get dimensions() {
