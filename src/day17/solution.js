@@ -10,6 +10,14 @@ function part1(input) {
   return cube.activeCount;
 }
 
-function part2(input) {}
+function part2(input) {
+  let cube = new Cube(4, input);
+
+  while (cube.ticks < 6) {
+    cube.tick();
+  }
+
+  return cube.activeCount;
+}
 
 module.exports = { part1, part2 };
