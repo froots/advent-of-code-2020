@@ -1,34 +1,30 @@
+function combine(value, arrs) {
+  return arrs.map((arr) => [value, ...arr]);
+}
+
 class Bounds {
-  constructor(xSize, ySize, zSize) {
-    this.x = [0, xSize];
-    this.y = [0, ySize];
-    this.z = [0, zSize];
+  constructor(sizes) {
+    this.ranges = sizes.map((size) => [0, size]);
   }
 
   get dimensions() {
-    return [
-      this.x[1] - this.x[0],
-      this.y[1] - this.y[0],
-      this.z[1] - this.z[0],
-    ];
+    return this.ranges.map(([min, max]) => max - min);
   }
 
-  get coords() {
-    const cds = [];
-    for (let z = this.z[0]; z < this.z[1]; z += 1) {
-      for (let y = this.y[0]; y < this.y[1]; y += 1) {
-        for (let x = this.x[0]; x < this.x[1]; x += 1) {
-          cds.push([x, y, z]);
-        }
-      }
+  coords(i = 0) {
+    let range = this.ranges[i];
+    let cds = [];
+    let restCoords = this.ranges[i + 1] ? this.coords(i + 1) : [[]];
+
+    for (let idx = range[0]; idx < range[1]; idx += 1) {
+      cds = [...cds, restCoords.map((arr) => [idx, ...arr])];
     }
-    return cds;
+
+    return cds.flat();
   }
 
   expand() {
-    this.x = [this.x[0] - 1, this.x[1] + 1];
-    this.y = [this.y[0] - 1, this.y[1] + 1];
-    this.z = [this.z[0] - 1, this.z[1] + 1];
+    this.ranges = this.ranges.map(([min, max]) => [min - 1, max + 1]);
   }
 }
 
