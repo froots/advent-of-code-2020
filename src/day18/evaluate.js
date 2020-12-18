@@ -9,13 +9,31 @@ function multiplication(a, b) {
 function evaluate(expression) {
   let term;
   let operation;
+  let c;
+  let exp = expression.replace(/ /g, '');
 
-  for (let c of expression.replace(/ /g, '').split('')) {
+  while ((c = exp.charAt(0))) {
+    exp = exp.slice(1);
+
+    if (c === '(') {
+      if (operation) {
+        let result;
+        [result, exp] = evaluate(exp);
+        term = operation(term, result);
+        operation = null;
+      } else {
+        [term, exp] = evaluate(exp);
+      }
+    }
+
+    if (c === ')') {
+      return [term, exp];
+    }
+
     if (c.match(/\d/)) {
       if (operation) {
         term = operation(term, Number(c));
         operation = null;
-        continue;
       } else {
         term = Number(c);
       }
@@ -23,16 +41,14 @@ function evaluate(expression) {
 
     if (c === '+') {
       operation = addition;
-      continue;
     }
 
     if (c === '*') {
       operation = multiplication;
-      continue;
     }
   }
 
-  return term;
+  return [term, exp];
 }
 
 module.exports = evaluate;
