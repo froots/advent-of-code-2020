@@ -61,13 +61,30 @@ function evaluatePrecedence(expression) {
   while ((c = exp.charAt(0))) {
     exp = exp.slice(1);
 
+    if (c === '(') {
+      if (operation) {
+        let result;
+        [result, exp] = evaluatePrecedence(exp);
+        term = operation(term, result);
+        operation = null;
+      } else {
+        [term, exp] = evaluatePrecedence(exp);
+      }
+    }
+
+    if (c === ')') {
+      if (stack.length) {
+        stack.push(term);
+        let stackExp;
+        [term, stackExp] = evaluateOrder(stack.join(''));
+        return [term, stackExp + exp];
+      }
+    }
+
     if (c.match(/\d/)) {
       if (operation && term) {
         term = operation(term, Number(c));
         operation = null;
-      } else if (term) {
-        stack.push(term);
-        term = Number(c);
       } else {
         term = Number(c);
       }

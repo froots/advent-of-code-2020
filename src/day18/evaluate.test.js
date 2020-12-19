@@ -75,4 +75,8 @@ describe('evaluatePrecedence', () => {
   test('evaluates multiplication and addition in correct order', () => {
     expect(evaluatePrecedence('2 * 3 + 4')[0]).toBe(14);
   });
+
+  test('evaluates parentheses first', () => {
+    expect(evaluatePrecedence('(2 * 3) + 4')[0]).toBe(10);
+  });
 });
