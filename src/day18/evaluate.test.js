@@ -91,4 +91,23 @@ describe('evaluatePrecedence', () => {
   test('evaluates nested parentheses', () => {
     expect(evaluatePrecedence(split('2 * (3 + (4 * 2))'))[0]).toBe(22);
   });
+
+  test('examples from instructions', () => {
+    expect(evaluatePrecedence(split('1 + 2 * 3 + 4 * 5 + 6'))[0]).toBe(231);
+    expect(evaluatePrecedence(split('1 + (2 * 3) + (4 * (5 + 6))'))[0]).toBe(
+      51
+    );
+    expect(evaluatePrecedence(split('2 * 3 + (4 * 5)'))[0]).toBe(46);
+    expect(evaluatePrecedence(split('5 + (8 * 3 + 9 + 3 * 4 * 3)'))[0]).toBe(
+      1445
+    );
+    expect(
+      evaluatePrecedence(split('5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))'))[0]
+    ).toBe(669060);
+    expect(
+      evaluatePrecedence(
+        split('((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2')
+      )[0]
+    ).toBe(23340);
+  });
 });
