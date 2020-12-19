@@ -51,4 +51,47 @@ function evaluateOrder(expression) {
   return [term, exp];
 }
 
-module.exports = { evaluateOrder };
+function evaluatePrecedence(expression) {
+  let stack = [];
+  let term;
+  let operation;
+  let c;
+  let exp = expression.replace(/ /g, '');
+
+  while ((c = exp.charAt(0))) {
+    exp = exp.slice(1);
+
+    if (c.match(/\d/)) {
+      if (operation && term) {
+        term = operation(term, Number(c));
+        operation = null;
+      } else if (term) {
+        stack.push(term);
+        term = Number(c);
+      } else {
+        term = Number(c);
+      }
+    }
+
+    if (c === '*') {
+      if (term) {
+        stack.push(term);
+        term = null;
+      }
+      stack.push('*');
+    }
+
+    if (c === '+') {
+      operation = addition;
+    }
+  }
+
+  if (stack.length) {
+    stack.push(term);
+    [term, exp] = evaluateOrder(stack.join(''));
+  }
+
+  return [term, exp];
+}
+
+module.exports = { evaluateOrder, evaluatePrecedence };
