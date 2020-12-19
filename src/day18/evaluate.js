@@ -10,11 +10,9 @@ function evaluateOrder(expression) {
   let term;
   let operation;
   let c;
-  let exp = expression.replace(/ /g, '');
+  let exp = [...expression];
 
-  while ((c = exp.charAt(0))) {
-    exp = exp.slice(1);
-
+  while ((c = exp.shift())) {
     if (c === '(') {
       if (operation) {
         let result;
@@ -27,10 +25,10 @@ function evaluateOrder(expression) {
     }
 
     if (c === ')') {
-      return [term, exp];
+      return [term, [...exp]];
     }
 
-    if (c.match(/\d/)) {
+    if (typeof c === 'number' || c.match(/\d/)) {
       if (operation) {
         term = operation(term, Number(c));
         operation = null;
@@ -48,7 +46,7 @@ function evaluateOrder(expression) {
     }
   }
 
-  return [term, exp];
+  return [term, [...exp]];
 }
 
 function evaluatePrecedence(expression) {
@@ -56,11 +54,9 @@ function evaluatePrecedence(expression) {
   let term;
   let operation;
   let c;
-  let exp = expression.replace(/ /g, '');
+  let exp = [...expression];
 
-  while ((c = exp.charAt(0))) {
-    exp = exp.slice(1);
-
+  while ((c = exp.shift())) {
     if (c === '(') {
       if (operation) {
         let result;
@@ -76,12 +72,14 @@ function evaluatePrecedence(expression) {
       if (stack.length) {
         stack.push(term);
         let stackExp;
-        [term, stackExp] = evaluateOrder(stack.join(''));
-        return [term, stackExp + exp];
+        [term, stackExp] = evaluateOrder(stack);
+        return [term, [...stackExp, ...exp]];
+      } else {
+        return [term, [...exp]];
       }
     }
 
-    if (c.match(/\d/)) {
+    if (typeof c === 'number' || c.match(/\d+/)) {
       if (operation && term) {
         term = operation(term, Number(c));
         operation = null;
@@ -105,10 +103,10 @@ function evaluatePrecedence(expression) {
 
   if (stack.length) {
     stack.push(term);
-    [term, exp] = evaluateOrder(stack.join(''));
+    [term, exp] = evaluateOrder(stack);
   }
 
-  return [term, exp];
+  return [term, [...exp]];
 }
 
 module.exports = { evaluateOrder, evaluatePrecedence };
