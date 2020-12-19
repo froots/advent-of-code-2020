@@ -25,7 +25,7 @@ function evaluateOrder(expression) {
     }
 
     if (c === ')') {
-      return [term, [...exp]];
+      return [term, exp];
     }
 
     if (typeof c === 'number' || c.match(/\d/)) {
@@ -71,12 +71,9 @@ function evaluatePrecedence(expression) {
     if (c === ')') {
       if (stack.length) {
         stack.push(term);
-        let stackExp;
-        [term, stackExp] = evaluateOrder(stack);
-        return [term, [...stackExp, ...exp]];
-      } else {
-        return [term, [...exp]];
+        [term] = evaluateOrder(stack);
       }
+      return [term, exp];
     }
 
     if (typeof c === 'number' || c.match(/\d+/)) {
@@ -106,7 +103,7 @@ function evaluatePrecedence(expression) {
     [term, exp] = evaluateOrder(stack);
   }
 
-  return [term, [...exp]];
+  return [term, exp];
 }
 
 module.exports = { evaluateOrder, evaluatePrecedence };
