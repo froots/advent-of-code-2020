@@ -6,7 +6,7 @@ function multiplication(a, b) {
   return a * b;
 }
 
-function evaluate(expression) {
+function evaluateOrder(expression) {
   let term;
   let operation;
   let c;
@@ -18,11 +18,11 @@ function evaluate(expression) {
     if (c === '(') {
       if (operation) {
         let result;
-        [result, exp] = evaluate(exp);
+        [result, exp] = evaluateOrder(exp);
         term = operation(term, result);
         operation = null;
       } else {
-        [term, exp] = evaluate(exp);
+        [term, exp] = evaluateOrder(exp);
       }
     }
 
@@ -51,4 +51,4 @@ function evaluate(expression) {
   return [term, exp];
 }
 
-module.exports = evaluate;
+module.exports = { evaluateOrder };
