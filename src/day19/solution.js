@@ -8,16 +8,18 @@ function part1(ruleInput, messages) {
 
 function part2(ruleInput, messages) {
   const regexer = new Regexer(ruleInput);
-  regexer.rules.set(8, '42 | 42 8');
-  regexer.rules.set(11, '42 31 | 42 11 31');
   let _42 = regexer.make(42);
   let _31 = regexer.make(31);
-  regexer.cache.set(regexer.rules.get(8), `(?:${_42}+)`);
-  regexer.cache.set(regexer.rules.get(11), `(?:${_42}+${_31}+)`);
 
-  const regex = regexer.fullRegex();
-  console.log(regex);
-  return messages.filter((message) => regex.test(message)).length;
+  const regex = new RegExp(`^(?:(?<g42>${_42}+)(?<g31>${_31}+))$`);
+  return messages
+    .filter((message) => regex.test(message))
+    .filter((message) => {
+      let matches = message.match(regex);
+      let matches42 = matches.groups.g42.match(new RegExp(_42, 'g'));
+      let matches31 = matches.groups.g31.match(new RegExp(_31, 'g'));
+      return matches42.length > matches31.length;
+    }).length;
 }
 
 module.exports = { part1, part2 };
