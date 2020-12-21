@@ -72,6 +72,6 @@ describe('19.2', () => {
     ];
 
     expect(part1(rules, messages)).toBe(3);
-    // expect(part2(rules, messages)).toBe(12);
+    expect(part2(rules, messages)).toBe(12);
   });
 });
