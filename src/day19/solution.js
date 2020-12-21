@@ -1,3 +1,5 @@
+const regexCache = new Map();
+
 function parseRule(rule) {
   if (rule.match(/"[ab]"/)) {
     return rule.replace(/"/g, '');
@@ -16,22 +18,28 @@ function parseRules(ruleInput) {
 }
 
 function makeRegex(rules, num = 0) {
-  const rule = rules.get(num);
+  if (regexCache.get(num)) {
+    return regexCache.get(num);
+  }
+  let rule = rules.get(num);
 
-  if (typeof rule === 'string') {
-    return rule;
+  if (typeof rule !== 'string') {
+    rule =
+      '(?:' +
+      rule
+        .map((seq) => seq.map((n) => makeRegex(rules, n)).join(''))
+        .join('|') +
+      ')';
   }
 
-  return (
-    '(' +
-    rule.map((seq) => seq.map((n) => makeRegex(rules, n)).join('')).join('|') +
-    ')'
-  );
+  regexCache.set(num, rule);
+  return rule;
 }
 
 function part1(ruleInput, messages) {
   const rules = parseRules(ruleInput);
   const regex = new RegExp('^' + makeRegex(rules) + '$');
+  console.log(regex);
 
   return messages.filter((message) => regex.test(message)).length;
 }
