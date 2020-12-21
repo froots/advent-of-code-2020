@@ -5,7 +5,6 @@ class Regexer {
       const [num, rule] = line.split(': ');
       this.rules.set(Number(num), rule);
     });
-    console.log(this.rules);
     this.cache = new Map();
   }
 
