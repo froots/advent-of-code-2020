@@ -31,16 +31,13 @@ function identifyCandidates(foods) {
 
 function resolveMatches(candidates) {
   const matches = new Map();
+  let singleIngredientMatch;
 
-  while (true) {
-    const singleIngredientMatch = [...candidates.entries()].find(
+  while (
+    (singleIngredientMatch = [...candidates.entries()].find(
       ([_, ingredients]) => ingredients.size === 1
-    );
-
-    if (!singleIngredientMatch) {
-      break;
-    }
-
+    ))
+  ) {
     let [matchingAllergen, matchingIngredient] = singleIngredientMatch;
     matchingIngredient = [...matchingIngredient][0];
 
