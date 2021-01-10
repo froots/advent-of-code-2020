@@ -10,8 +10,7 @@ function intersection(set1, set2) {
   return intersect;
 }
 
-function part1(input) {
-  const foods = input.map(parse);
+function identifyCandidates(foods) {
   const candidates = new Map();
 
   foods.forEach(([ingredients, allergens]) => {
@@ -27,6 +26,10 @@ function part1(input) {
     });
   });
 
+  return candidates;
+}
+
+function resolveMatches(candidates) {
   const matches = new Map();
 
   while (true) {
@@ -49,6 +52,14 @@ function part1(input) {
       ingredients.delete(matchingIngredient);
     });
   }
+
+  return matches;
+}
+
+function part1(input) {
+  const foods = input.map(parse);
+  const candidates = identifyCandidates(foods);
+  const matches = resolveMatches(candidates);
 
   return foods
     .flatMap(([ingredients]) => ingredients)

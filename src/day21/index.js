@@ -4,7 +4,7 @@ const { part1 } = require('./solution');
 
 function run() {
   readInput('21', (data) => {
-    const input = data.split('\n');
+    const input = data.split('\n').filter((line) => !!line);
     logTimed('21.1', () => part1(input));
   });
 }
