@@ -55,12 +55,20 @@ function resolveMatches(candidates) {
 
 function part1(input) {
   const foods = input.map(parse);
-  const candidates = identifyCandidates(foods);
-  const matches = resolveMatches(candidates);
+  const matches = resolveMatches(identifyCandidates(foods));
 
   return foods
     .flatMap(([ingredients]) => ingredients)
     .filter((ingredient) => !matches.has(ingredient)).length;
 }
 
-module.exports = { part1 };
+function part2(input) {
+  const foods = input.map(parse);
+  const matches = resolveMatches(identifyCandidates(foods));
+  return [...matches.entries()]
+    .sort(([_, a], [__, b]) => a.localeCompare(b))
+    .map(([ingredient]) => ingredient)
+    .join(',');
+}
+
+module.exports = { part1, part2 };
